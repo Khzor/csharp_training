@@ -17,7 +17,6 @@ namespace WebAddressbookTests
             group.Footer = "fff";
 
             app.Groups.Create(group);
-
         }
 
         [Test]
