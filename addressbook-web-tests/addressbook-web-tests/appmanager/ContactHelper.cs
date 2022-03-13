@@ -15,15 +15,20 @@ namespace WebAddressbookTests
         {
         }
 
-        public ContactHelper Remove(int v, ContactData contact)
+        public ContactHelper CreateContactIfItDoesntExist(ContactData contactData)
         {
             manager.Navigator.GoToHomePage();
 
             if (IsElementPresent(By.Name("selected[]")) == false)
             {
-                Create(contact);
+                Create(contactData);
             }
 
+            return this;
+        }
+
+        public ContactHelper Remove(int v)
+        {
             manager.Navigator.GoToHomePage();
             SelectContact(v);
             RemoveContact();
@@ -32,13 +37,6 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int v, ContactData newData)
         {
-            manager.Navigator.GoToHomePage();
-
-            if (IsElementPresent(By.Name("selected[]")) == false)
-            {
-                Create(newData);
-            }
-
             manager.Navigator.GoToHomePage();
             SelectContact(v);
             InitContactModification();
