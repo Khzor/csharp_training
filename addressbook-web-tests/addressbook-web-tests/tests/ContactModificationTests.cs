@@ -8,10 +8,10 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
-        public void GroupModificationTest()
+        public void ContactModificationTest()
         {
             ContactData newData = new ContactData("Petr", "Petrov");
 
