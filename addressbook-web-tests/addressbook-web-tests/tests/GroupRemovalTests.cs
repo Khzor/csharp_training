@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -17,7 +18,16 @@ namespace WebAddressbookTests
             group.Footer = "fff";
 
             app.Groups.CreateGroupIfItDoesntExist(group);
-            app.Groups.Remove(1);
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Remove(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups, newGroups);
+
         }
     }
 }

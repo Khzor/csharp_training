@@ -27,11 +27,28 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                string lastname = cells[1].Text;
+                string firstname = cells[2].Text;
+                contacts.Add(new ContactData(cells[2].Text, cells[1].Text));
+            }
+            return contacts;
+        }
+
         public ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(v);
             RemoveContact();
+            CloseContactAlert();
+            driver.FindElement(By.CssSelector("div.msgbox"));
             return this;
         }
 
@@ -59,14 +76,13 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int p)
         {
-            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr/td[" + p + "]/input")).Click();
+            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr/td[" + (p + 1) + "]/input")).Click();
             return this;
         }
 
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            driver.SwitchTo().Alert().Accept();
             return this;
         }
 
@@ -94,6 +110,12 @@ namespace WebAddressbookTests
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
+        }
+
+        public ContactHelper CloseContactAlert()
+        {
+            driver.SwitchTo().Alert().Accept();
             return this;
         }
     }
