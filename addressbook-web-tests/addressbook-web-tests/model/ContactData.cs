@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
+        private string allPhones;
+        private string allEmails;
 
         public ContactData(string firstname, string lastname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -27,7 +28,7 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return (Firstname == other.firstname && Lastname == other.lastname);
+            return (Firstname == other.Firstname && Lastname == other.Lastname);
         }
 
         public override int GetHashCode()
@@ -56,27 +57,68 @@ namespace WebAddressbookTests
             
         }
 
-        public string Firstname
+        public string Firstname { get; set; }
+
+        public string Lastname { get; set; }
+
+        public string Address { get; set; }
+
+        public string HomePhone { get; set; }
+
+        public string MobilePhone { get; set; }
+
+        public string WorkPhone { get; set; }
+
+        public string AllPhones
         {
             get
             {
-                return firstname;
+                if (allPhones != null)
+                {
+                    return allPhones;
+                } 
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
             }
             set
             {
-                firstname = value;
+                allPhones = value;
             }
         }
 
-        public string Lastname
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
+        public string AllEmails
         {
             get
             {
-                return lastname;
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return Email + "\r\n" + Email2 + "\r\n" + Email3;
+                }
             }
             set
             {
-                lastname = value;
+                allEmails = value;
             }
         }
     }
