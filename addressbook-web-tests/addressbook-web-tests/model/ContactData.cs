@@ -11,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string contactInformation;
 
         public ContactData(string firstname, string lastname)
         {
@@ -119,6 +120,26 @@ namespace WebAddressbookTests
             set
             {
                 allEmails = value;
+            }
+        }
+
+        public string ContactInformation
+        {
+            get
+            {
+                if (contactInformation != null)
+                {
+                    return Regex.Replace(contactInformation, "\r\n", "").Replace(" ", "");
+                }
+                else
+                {
+                    return Regex.Replace((Firstname + Lastname + Address + "H:" + HomePhone + "M:" + MobilePhone + "W:" + WorkPhone
+                        + AllEmails), "\r\n", "").Replace(" ", "");
+                }
+            }
+            set
+            {
+                contactInformation = value;
             }
         }
     }
