@@ -113,6 +113,15 @@ namespace WebAddressbookTests
             return email + "\r\n";
         }
 
+        private string CleanUpAddress(string address)
+        {
+            if (address == null || address == "")
+            {
+                return "";
+            }
+            return address.Replace(" ", "") + "\r\n";
+        }
+
         public string AllEmails
         {
             get
@@ -132,26 +141,53 @@ namespace WebAddressbookTests
             }
         }
 
-
-
         public string ContactInformation
         {
             get
             {
                 if (contactInformation != null)
                 {
-                    return Regex.Replace(contactInformation, "\r\n", "").Replace(" ", "");
+                    return contactInformation;
                 }
                 else
                 {
-                    return Regex.Replace((Firstname + Lastname + Address + "H:" + HomePhone + "M:" + MobilePhone + "W:" + WorkPhone
-                        + AllEmails), "\r\n", "").Replace(" ", "");
+                    if (Lastname != "")
+                    {
+                        Lastname = " " + Lastname;
+                    }
+                    return (Firstname + Lastname + "\r\n" + CleanUpAddress(Address) + PhonesFromForm(HomePhone, MobilePhone, WorkPhone) 
+                        + "\r\n" + AllEmails).Trim();
                 }
             }
             set
             {
                 contactInformation = value;
             }
+        }
+
+        public string PhonesFromForm(string homePhone, string mobilePhone, string workPhone)
+        {
+            if (homePhone == "" & mobilePhone == "" & workPhone == "")
+            {
+                return "";
+            }
+
+            if (homePhone != "")
+            {
+                homePhone = "H: " + homePhone + "\r\n";
+            }
+
+            if (mobilePhone != "")
+            {
+                mobilePhone = "M: " + mobilePhone + "\r\n";
+            }
+
+            if (workPhone != "")
+            {
+                workPhone = "W: " + workPhone + "\r\n";
+            }
+
+            return "\r\n" + homePhone + mobilePhone + workPhone;
         }
     }
 }
