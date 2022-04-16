@@ -95,7 +95,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
         }
 
         public string Email { get; set; }
@@ -103,6 +103,15 @@ namespace WebAddressbookTests
         public string Email2 { get; set; }
 
         public string Email3 { get; set; }
+
+        private string CleanUpEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email + "\r\n";
+        }
 
         public string AllEmails
         {
@@ -114,7 +123,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email + "\r\n" + Email2 + "\r\n" + Email3;
+                    return CleanUpEmail(Email) + CleanUpEmail(Email2) + Email3;
                 }
             }
             set
@@ -122,6 +131,8 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
+
+
 
         public string ContactInformation
         {
