@@ -13,6 +13,10 @@ namespace WebAddressbookTests
         private string allEmails;
         private string contactInformation;
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
@@ -70,6 +74,12 @@ namespace WebAddressbookTests
 
         public string WorkPhone { get; set; }
 
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
         public string AllPhones
         {
             get
@@ -97,12 +107,6 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(phone, "[- ()]", "") + "\r\n";
         }
-
-        public string Email { get; set; }
-
-        public string Email2 { get; set; }
-
-        public string Email3 { get; set; }
 
         private string CleanUpEmail(string email)
         {
