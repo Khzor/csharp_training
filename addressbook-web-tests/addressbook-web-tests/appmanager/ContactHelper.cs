@@ -193,8 +193,7 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData contact, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(contact.Id);
-            InitContactModification(0);
+            InitContactModification(contact.Id);
             FillContactForm(newData);
             SubmitContactModification();
             return this;
@@ -204,6 +203,13 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("update")).Click();
             contactCache = null;
+            return this;
+        }
+
+        public ContactHelper InitContactModification(string id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']"))
+                .Click();
             return this;
         }
 
