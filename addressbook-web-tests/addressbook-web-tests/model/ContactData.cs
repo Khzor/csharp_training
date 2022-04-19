@@ -153,7 +153,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return CleanUpEmail(Email) + CleanUpEmail(Email2) + Email3;
+                    return (CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
                 }
             }
             set
